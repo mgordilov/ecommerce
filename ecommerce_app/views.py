@@ -4,8 +4,7 @@ import os
 
 import stripe
 
-stripe.api_key = 'sk_test_51MlaPJBH5qedVa5Iw9X22b6mvAOUiO4rVOQn2B0IbXIn9xAKhnUAnlGplBRWtc2RieFaFVbJ3omxXcdx0xzXGTmM00Q1iXpIzY'
-
+stripe.api_key = 
 # Create your views here.
 def home(request):
     return render(request, 'ecommerce_app/home.html')
