@@ -4,7 +4,7 @@ import os
 
 import stripe
 
-stripe.api_key = ''
+stripe.api_key = 
 
 # Create your views here.
 def home(request):
