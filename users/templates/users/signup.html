@@ -1,0 +1,16 @@
+{% extends 'ecommerce_app/base.html' %}
+
+{% block head %}
+    <title>Signup</title>
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>Create your account</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Signup">
+    </form>
+{% endblock %}

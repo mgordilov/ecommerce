@@ -1,0 +1,26 @@
+{% extends 'ecommerce_app/base.html' %}
+
+{% block head %}
+    <title>Home</title>
+{% endblock %}
+
+{% block content %}
+    <h2>Welcome to our store</h2>
+    <hr>
+    <h3>Products</h3>
+    <a href="{% url 'create-product' %}"><input type="button" value="Create Product"></a>
+    <ul>
+        {% for product in products %}
+            <li>
+                <h4>{{ product.name }}</h4>
+                <p>{{ product.description }}</p>
+                <p>{{ product.price }}</p>
+                <form action="{% url 'create-checkout-session' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Checkout</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <hr>
+{% endblock %}

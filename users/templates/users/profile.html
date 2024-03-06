@@ -1,0 +1,11 @@
+{% extends 'ecommerce_app/base.html' %}
+
+{% block head %}
+    <title>{{ user.username }}</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome back {{ user.first_name }} {{ user.last_name }}</h1>
+    <h3>Your email is {{ user.email }}</h3>
+    <h3>Your username is {{ user.username }}</h3>
+{% endblock %}
