@@ -13,11 +13,12 @@ import os
 
 import stripe
 
-stripe.api_key = ''
+# stripe.api_key = ''
 
 # Create your views here.
+@login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    return render(request, 'users/profile.html', {'user': request.user})
 
 def signin(request):
     if request.method == 'POST':
@@ -52,3 +53,16 @@ def signup(request):
 def signout(request):
     logout(request)
     return redirect('home')
+
+@login_required
+def business_create(request):
+    if request.method == 'POST':
+        form = forms.BusinessCreate(request.POST)
+        if form.is_valid():
+            business = form.save(commit=False)
+            business.owner = request.user
+            business.save()
+            return redirect('profile')
+    else:
+        form = forms.BusinessCreate()
+    return render(request, 'users/business_create.html', {'form': form})

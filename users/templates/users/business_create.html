@@ -1,0 +1,16 @@
+{% extends 'ecommerce_app/base.html' %}
+
+{% block head %}
+    <title>Create Business</title>
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>Create Business</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

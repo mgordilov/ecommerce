@@ -32,3 +32,18 @@ class UserLoginForm(forms.Form):
             'password',
             Submit('submit', 'Submit')
         )
+
+class BusinessCreate(forms.ModelForm):
+    class Meta:
+        model = models.Business
+        fields = ['name', 'type', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            'name',
+            'type',
+            'description',
+            Submit('submit', 'Submit')
+        )
