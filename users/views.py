@@ -13,7 +13,7 @@ import os
 
 import stripe
 
-# stripe.api_key = ''
+stripe.api_key = 'sk_test_51MlaPJBH5qedVa5Iv3CRtZ6WCDvNSQqq6F2Qh4iD6lcHOWTzZEZktq8sRjlf24qg0LPM9kUbWq1qEceUIUg4Oxu500aPbmkO2Y'
 
 # Create your views here.
 @login_required
@@ -59,10 +59,28 @@ def business_create(request):
     if request.method == 'POST':
         form = forms.BusinessCreate(request.POST)
         if form.is_valid():
+            stripeBusiness = stripe.Account.create(
+              type='express',
+              business_type=form.cleaned_data.get('type'),
+              country="IE",
+              email=request.user.email,
+              capabilities={
+                "card_payments": {"requested": True},
+                "transfers": {"requested": True},
+              },
+            )
             business = form.save(commit=False)
             business.owner = request.user
+            business.stripe_id = stripeBusiness['id']
             business.save()
-            return redirect('profile')
+
+            stripeLink = stripe.AccountLink.create(
+              account=stripeBusiness['id'],
+              refresh_url="https://stripe.com/",
+              return_url="http://localhost:8000/profile",
+              type="account_onboarding",
+            )
+            return redirect(stripeLink['url'])
     else:
         form = forms.BusinessCreate()
     return render(request, 'users/business_create.html', {'form': form})
