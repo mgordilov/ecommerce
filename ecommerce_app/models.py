@@ -24,7 +24,3 @@ class Product(models.Model):
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     product = models.ManyToManyField(Product)
-
-class WishList(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    product = models.ManyToManyField(Product)
