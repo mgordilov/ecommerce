@@ -26,11 +26,19 @@ class Business(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    business = models.ForeignKey(Business, on_delete=models.CASCADE, blank=True, null=True)
+    business = models.ForeignKey(Business, on_delete=models.SET_NULL, blank=True, null=True)
+    wishlist = models.ManyToManyField('ecommerce_app.Product', blank=True, null=True)
 
-@receiver(post_save, sender=Business)
+@receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
+        UserProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=Business)
+def create_business(sender, instance, created, **kwargs):
+    if created:
         user = instance.owner
-        if not UserProfile.objects.filter(user=user).exists():
-            UserProfile.objects.create(user=user, business=instance)
+        if UserProfile.objects.filter(user=user).exists():
+            user_profile = UserProfile.objects.get(user=user)
+            user_profile.business = instance
+            user_profile.save()

@@ -84,3 +84,12 @@ def business_create(request):
     else:
         form = forms.BusinessCreate()
     return render(request, 'users/business_create.html', {'form': form})
+
+@login_required
+def business_delete(request):
+    business = get_object_or_404(models.Business, owner=request.user)
+    if request.method == 'POST':
+        stripe.Account.delete(business.stripe_id)
+        business.delete()
+        return redirect('profile')
+    return render(request, 'users/business_delete.html', {'business': business})

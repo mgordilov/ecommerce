@@ -11,4 +11,14 @@
     <hr>
     <h3>Your business is {{ user.userprofile.business.name }}</h3>
     <a href="{% url 'business-create' %}"><input type="button" value="Create Business"></a>
+    {% if user.userprofile.business %}
+        <a href="{% url 'business-delete' %}"><input type="button" value="Delete Business"></a>
+    {% endif %}
+    <hr>
+    <h3>Your wishlist</h3>
+    <ul>
+        {% for product in user.userprofile.wishlist.all %}
+            <li>{{ product.name }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

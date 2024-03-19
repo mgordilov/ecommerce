@@ -1,0 +1,14 @@
+{% extends 'ecommerce_app/base.html' %}
+
+{% block head %}
+    <title>Delete Business</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Delete Business</h1>
+    <p>Are you sure you want to delete your business?</p>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Confirm">
+    </form>
+{% endblock %}

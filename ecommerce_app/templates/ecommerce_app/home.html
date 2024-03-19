@@ -19,8 +19,17 @@
                     {% csrf_token %}
                     <button type="submit">Checkout</button>
                 </form>
+                <a href="{% url 'add-to-wishlist' product.id %}"><input type="button" value="Add to wishlist"></a>
             </li>
         {% endfor %}
     </ul>
     <hr>
+
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                alert('{{ message }}')
+            </script>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
