@@ -21,6 +21,6 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
-class Cart(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    product = models.ManyToManyField(Product)
+# class Cart(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+#     product = models.ManyToManyField(Product)

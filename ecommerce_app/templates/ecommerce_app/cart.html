@@ -1,0 +1,18 @@
+{% extends 'ecommerce_app/base.html' %}
+
+{% block head %}
+    <title>Cart</title>
+{% endblock %}
+
+{% block content %}
+    <h2>Your cart</h2>
+    <ul>
+        {% for product in request.user.userprofile.cart.all %}
+            <li>{{ product.name }}</li>
+        {% endfor %}
+    </ul>
+    <form action="{% url 'cart-checkout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Checkout</button>
+    </form>
+{% endblock %}

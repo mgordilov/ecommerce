@@ -45,6 +45,31 @@ def createCheckoutSession(request, pk):
     else:
         return render(request, 'ecommerce_app/home.html')
 
+def createCartCheckoutSession(request):
+    if request.method == 'POST':
+        line_items = []
+        for product in request.user.userprofile.cart.all():
+            line_items.append({
+                'price_data': {
+                    'currency': 'eur',
+                    'product_data': {
+                        'name': product.name,
+                    },
+                    'unit_amount': int(product.price * 100),
+                },
+                'quantity': 1,
+            }),
+        checkout_session = stripe.checkout.Session.create(
+            line_items = line_items,
+            mode = 'payment',
+            success_url = 'http://example.com',
+            cancel_url = 'http://localhost:8000/cart/',
+        )
+        return redirect(checkout_session.url, code=303)
+    
+    else:
+        return render(request, 'ecommerce_app/cart.html')
+
 class CreateProductView(LoginRequiredMixin, CreateView):
     model = models.Product
     form_class = forms.ProductCreateForm
@@ -60,6 +85,19 @@ def AddToWishlist(request, pk):
         messages.info(request, 'Product added to your wishlist')
     return redirect('home')
 
+def AddToCart(request, pk):
+    product = get_object_or_404(models.Product, pk=pk)
+    if product in request.user.userprofile.cart.all():
+        request.user.userprofile.cart.remove(product)
+        messages.info(request, 'Product removed from your cart')
+    else:
+        request.user.userprofile.cart.add(product)
+        messages.info(request, 'Product added to your cart')
+    return redirect('home')
+
 def home(request):
     products = models.Product.objects.all()
     return render(request, 'ecommerce_app/home.html', {'products': products})
+
+def cart(request):
+    return render(request, 'ecommerce_app/cart.html')

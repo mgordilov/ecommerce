@@ -27,7 +27,8 @@ class Business(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     business = models.ForeignKey(Business, on_delete=models.SET_NULL, blank=True, null=True)
-    wishlist = models.ManyToManyField('ecommerce_app.Product', blank=True)
+    wishlist = models.ManyToManyField('ecommerce_app.Product', blank=True, related_name='wishlist')
+    cart = models.ManyToManyField('ecommerce_app.Product', blank=True, related_name='cart')
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

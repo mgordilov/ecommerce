@@ -20,6 +20,7 @@
                     <button type="submit">Checkout</button>
                 </form>
                 <a href="{% url 'add-to-wishlist' product.id %}"><input type="button" value="Add to wishlist"></a>
+                <a href="{% url 'add-to-cart' product.id %}"><input type="button" value="Add to cart"></a>
             </li>
         {% endfor %}
     </ul>
