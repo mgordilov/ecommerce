@@ -4,21 +4,26 @@ from . import models
 from . import forms
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth import logout, authenticate, login, get_user_model
 from django.contrib import messages
 
 import os
+import json
 
 import stripe
 
-stripe.api_key = 'sk_test_51MlaPJBH5qedVa5Iv3CRtZ6WCDvNSQqq6F2Qh4iD6lcHOWTzZEZktq8sRjlf24qg0LPM9kUbWq1qEceUIUg4Oxu500aPbmkO2Y'
+stripe.api_key = os.getenv('STRIPE_API')
+
+endpoint_secret = os.getenv('STRIPE_WEBHOOK_SECRET')
 
 # Create your views here.
 
 
+# Stripe related functions
 def createCheckoutSession(request, pk):
     name = get_object_or_404(models.Product, pk=pk).name
     price = get_object_or_404(models.Product, pk=pk).price * 100
@@ -62,7 +67,8 @@ def createCartCheckoutSession(request):
         checkout_session = stripe.checkout.Session.create(
             line_items = line_items,
             mode = 'payment',
-            success_url = 'http://example.com',
+            metadata = {'user_id': request.user.id},
+            success_url = 'http://localhost:8000/profile/',
             cancel_url = 'http://localhost:8000/cart/',
         )
         return redirect(checkout_session.url, code=303)
@@ -70,16 +76,44 @@ def createCartCheckoutSession(request):
     else:
         return render(request, 'ecommerce_app/cart.html')
 
-class CreateProductView(LoginRequiredMixin, CreateView):
-    model = models.Product
-    form_class = forms.ProductCreateForm
-    template_name = 'ecommerce_app/create_product.html'
+@csrf_exempt
+def webhook(request):
+    event = None
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
 
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return HttpResponse(status=400)
+
+    # Handle the checkout.session.completed event
+    if event.type == 'checkout.session.completed':
+        print("Payment was successful.")
+        metadata = event['data']['object']['metadata']
+        user_id = metadata['user_id']
+
+        if user_id:
+            user_profile = models.UserProfile.objects.get(user_id=user_id)
+            cart = user_profile.cart
+            cart.clear()
+    else:
+        print('Unhandled event type {}'.format(event.type))
+
+    return HttpResponse(status=200)
+
+#  Product related functions
 def AddToWishlist(request, pk):
     product = get_object_or_404(models.Product, pk=pk)
     if product in request.user.userprofile.wishlist.all():
         request.user.userprofile.wishlist.remove(product)
-        messages.info(request, 'Product removed from your wishlist')
+        messages.info(request, f'Product removed from your wishlist. {request.user.is_authenticated}')
     else:
         request.user.userprofile.wishlist.add(product)
         messages.info(request, 'Product added to your wishlist')
@@ -94,6 +128,13 @@ def AddToCart(request, pk):
         request.user.userprofile.cart.add(product)
         messages.info(request, 'Product added to your cart')
     return redirect('home')
+
+
+# Views
+class CreateProductView(LoginRequiredMixin, CreateView):
+    model = models.Product
+    form_class = forms.ProductCreateForm
+    template_name = 'ecommerce_app/create_product.html'
 
 def home(request):
     products = models.Product.objects.all()

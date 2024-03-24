@@ -11,4 +11,6 @@ urlpatterns = [
     path('create-product/', views.CreateProductView.as_view(), name='create-product'),
     path('add-to-wishlist/<int:pk>/', views.AddToWishlist, name='add-to-wishlist'),
     path('add-to-cart/<int:pk>/', views.AddToCart, name='add-to-cart'),
+
+    path('webhook', views.webhook, name='webhook'),
 ]

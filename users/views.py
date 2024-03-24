@@ -13,7 +13,7 @@ import os
 
 import stripe
 
-stripe.api_key = 'sk_test_51MlaPJBH5qedVa5Iv3CRtZ6WCDvNSQqq6F2Qh4iD6lcHOWTzZEZktq8sRjlf24qg0LPM9kUbWq1qEceUIUg4Oxu500aPbmkO2Y'
+stripe.api_key = os.getenv('STRIPE_API')
 
 # Create your views here.
 @login_required
