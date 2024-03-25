@@ -42,8 +42,9 @@ def createCheckoutSession(request, pk):
                 },
             ],
             mode = 'payment',
-            success_url = 'http://example.com',
-            cancel_url = 'http://localhost:8000/',
+            metadata = {'user_id': request.user.id},
+            success_url = 'http://localhost:8000/',
+            cancel_url = 'http://localhost:8000/cart/',
         )
         return redirect(checkout_session.url, code=303)
 
@@ -102,7 +103,10 @@ def webhook(request):
         if user_id:
             user_profile = models.UserProfile.objects.get(user_id=user_id)
             cart = user_profile.cart
-            cart.clear()
+            if cart:
+                cart.clear()
+            else:
+                pass
     else:
         print('Unhandled event type {}'.format(event.type))
 
@@ -131,10 +135,17 @@ def AddToCart(request, pk):
 
 
 # Views
-class CreateProductView(LoginRequiredMixin, CreateView):
-    model = models.Product
-    form_class = forms.ProductCreateForm
-    template_name = 'ecommerce_app/create_product.html'
+def productCreate(request):
+    if request.method == 'POST':
+        form = forms.ProductCreateForm(request.POST)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.business = request.user.userprofile.business
+            product.save()
+            return redirect('home')
+    else:
+        form = forms.ProductCreateForm()
+    return render(request, 'ecommerce_app/create_product.html', {'form': form})
 
 def home(request):
     products = models.Product.objects.all()

@@ -20,3 +20,9 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    seller = models.ForeignKey(Business, on_delete=models.CASCADE)

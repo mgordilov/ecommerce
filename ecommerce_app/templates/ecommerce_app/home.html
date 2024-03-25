@@ -8,13 +8,16 @@
     <h2>Welcome to our store</h2>
     <hr>
     <h3>Products</h3>
-    <a href="{% url 'create-product' %}"><input type="button" value="Create Product"></a>
+    {% if request.user.is_authenticated and request.user.id == request.user.userprofile.business.owner.id %}
+        <a href="{% url 'create-product' %}"><input type="button" value="Create Product"></a>
+    {% endif %}
     <ul>
         {% for product in products %}
             <li>
                 <h4>{{ product.name }}</h4>
                 <p>{{ product.description }}</p>
                 <p>{{ product.price }}</p>
+                <p>Sold by {{ product.business }}</p>
                 <form action="{% url 'create-checkout-session' product.id %}" method="POST">
                     {% csrf_token %}
                     <button type="submit">Checkout</button>
