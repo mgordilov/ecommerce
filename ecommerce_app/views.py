@@ -42,7 +42,7 @@ def createCheckoutSession(request, pk):
                 },
             ],
             mode = 'payment',
-            metadata = {'user_id': request.user.id},
+            metadata = {'user_id': request.user.id, 'product_id': pk},
             success_url = 'http://localhost:8000/',
             cancel_url = 'http://localhost:8000/cart/',
         )
@@ -54,6 +54,8 @@ def createCheckoutSession(request, pk):
 def createCartCheckoutSession(request):
     if request.method == 'POST':
         line_items = []
+        metadata = {'user_id': request.user.id}
+        n = 1
         for product in request.user.userprofile.cart.all():
             line_items.append({
                 'price_data': {
@@ -65,10 +67,13 @@ def createCartCheckoutSession(request):
                 },
                 'quantity': 1,
             }),
+            metadata.update({f'product_id{n}': product.id})
+            n += 1
+            
         checkout_session = stripe.checkout.Session.create(
             line_items = line_items,
             mode = 'payment',
-            metadata = {'user_id': request.user.id},
+            metadata = metadata,
             success_url = 'http://localhost:8000/profile/',
             cancel_url = 'http://localhost:8000/cart/',
         )
