@@ -23,6 +23,6 @@ class Product(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ManyToManyField(Product)
     quantity = models.PositiveIntegerField(default=1)
     seller = models.ForeignKey(Business, on_delete=models.CASCADE)

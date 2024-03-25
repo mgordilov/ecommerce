@@ -107,9 +107,15 @@ def webhook(request):
 
         if user_id:
             user_profile = models.UserProfile.objects.get(user_id=user_id)
-            cart = user_profile.cart
+            cart = user_profile.cart.all()
             if cart:
-                cart.clear()
+                order = models.Order.objects.create(
+                    user=user_profile.user,
+                    seller=user_profile.business
+                )
+                order.product.add(*cart)
+                order.save()
+                user_profile.cart.clear()
             else:
                 pass
     else:
