@@ -21,4 +21,11 @@
             <li>{{ product.name }}</li>
         {% endfor %}
     </ul>
+    <hr>
+    <h3>Your orders</h3>
+    <ul>
+        {% for order in orders %}
+            <li>Order #{{ order.id }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

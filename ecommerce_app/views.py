@@ -115,6 +115,8 @@ def webhook(request):
                 )
                 order.product.add(*cart)
                 order.save()
+
+                user_profile.order.add(order)
                 user_profile.cart.clear()
             else:
                 pass

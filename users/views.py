@@ -18,7 +18,7 @@ stripe.api_key = os.getenv('STRIPE_API')
 # Create your views here.
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html', {'user': request.user})
+    return render(request, 'users/profile.html', {'user': request.user, 'orders': request.user.userprofile.order.all()})
 
 def signin(request):
     if request.method == 'POST':
