@@ -165,8 +165,12 @@ def productDetail(request, pk):
 def products(request):
     products = models.Product.objects.all()
     gender_filter = request.GET.get('gender')
+    category_filter = request.GET.get('category')
     if gender_filter:
-        products = products.filter(gender=gender_filter)
+        if category_filter:
+            products = products.filter(gender=gender_filter, size=category_filter)
+        else:
+            products = products.filter(gender=gender_filter)
     else:
         products = products
     return render(request, 'ecommerce_app/products.html', {'products': products})

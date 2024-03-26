@@ -4,4 +4,4 @@ from django import forms
 class ProductCreateForm (forms.ModelForm):
     class Meta:
         model = models.Product
-        fields = ['name', 'description', 'price', 'gender', 'size']
+        fields = ['name', 'description', 'price', 'gender', 'size', 'category']

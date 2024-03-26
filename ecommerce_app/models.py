@@ -20,6 +20,17 @@ class Product(models.Model):
     ]
     gender = models.CharField(max_length=200, choices=GENDER_TYPE_CHOICES, default=WOMEN)
     size = models.CharField(max_length=3, blank=True)
+    SHOES = 'shoes'
+    TSHIRTS = 'tshirts'
+    PANTS = 'pants'
+    ACCESSORIES = 'accessories'
+    CATEGORY_CHOICES = [
+        (SHOES, 'Shoes'),
+        (TSHIRTS, 'T-Shirts'),
+        (PANTS, 'Pants'),
+        (ACCESSORIES, 'Accessories'),
+    ]
+    category = models.CharField(max_length=200, choices=CATEGORY_CHOICES, default=TSHIRTS)
     image = models.ImageField(upload_to='products/', blank=True, null=True)
     business = models.ForeignKey(Business, on_delete=models.CASCADE, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
