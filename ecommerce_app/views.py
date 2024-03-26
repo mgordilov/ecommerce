@@ -146,8 +146,6 @@ def AddToCart(request, pk):
         messages.info(request, 'Product added to your cart')
     return redirect('home')
 
-
-# Views
 def productCreate(request):
     if request.method == 'POST':
         form = forms.ProductCreateForm(request.POST)
@@ -160,9 +158,21 @@ def productCreate(request):
         form = forms.ProductCreateForm()
     return render(request, 'ecommerce_app/create_product.html', {'form': form})
 
-def home(request):
+def productDetail(request, pk):
+    product = get_object_or_404(models.Product, pk=pk)
+    return render(request, 'ecommerce_app/item_page.html', {'product': product})
+
+def products(request):
     products = models.Product.objects.all()
-    return render(request, 'ecommerce_app/home.html', {'products': products})
+    gender_filter = request.GET.get('gender')
+    if gender_filter:
+        products = products.filter(gender=gender_filter)
+    else:
+        products = products
+    return render(request, 'ecommerce_app/products.html', {'products': products})
+
+def home(request):
+    return render(request, 'ecommerce_app/home.html')
 
 def cart(request):
     return render(request, 'ecommerce_app/cart.html')

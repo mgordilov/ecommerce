@@ -19,7 +19,10 @@
         <nav>
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="#">Products</a></li>
+                <li><a href="{% url 'products' %}">Products</a></li>
+                <li><a href="{% url 'products' %}?gender=women">Women</a></li>
+                <li><a href="{% url 'products' %}?gender=men">Men</a></li>
+                <li><a href="{% url 'products' %}?gender=kids">Kids</a></li>
                 <li><a href="{% url 'cart' %}">Cart</a></li>
                 {% if request.user.is_authenticated %}
                     <li><a href="{% url 'profile' %}">Profile</a></li>

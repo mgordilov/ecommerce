@@ -10,6 +10,16 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    WOMEN = 'women'
+    MEN = 'men'
+    KIDS = 'kids'
+    GENDER_TYPE_CHOICES = [
+        (WOMEN, 'Women'),
+        (MEN, 'Men'),
+        (KIDS, 'Kids'),
+    ]
+    gender = models.CharField(max_length=200, choices=GENDER_TYPE_CHOICES, default=WOMEN)
+    size = models.CharField(max_length=3, blank=True)
     image = models.ImageField(upload_to='products/', blank=True, null=True)
     business = models.ForeignKey(Business, on_delete=models.CASCADE, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
