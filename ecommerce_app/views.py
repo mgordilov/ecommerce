@@ -29,6 +29,7 @@ def createCheckoutSession(request, pk):
     price = get_object_or_404(models.Product, pk=pk).price * 100
     if request.method == 'POST':
         checkout_session = stripe.checkout.Session.create(
+            customer = request.user.userprofile.customer_id,
             line_items = [
                 {
                     'price_data': {
@@ -71,6 +72,7 @@ def createCartCheckoutSession(request):
             n += 1
             
         checkout_session = stripe.checkout.Session.create(
+            customer = request.user.userprofile.customer_id,
             line_items = line_items,
             mode = 'payment',
             metadata = metadata,

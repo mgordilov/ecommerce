@@ -44,6 +44,13 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+            stripeCustomer = stripe.Customer.create(
+                email = request.user.email,
+                name = request.user.first_name + ' ' + request.user.last_name
+            )
+            user_profile = models.UserProfile.objects.get(user=request.user)
+            user_profile.customer_id = stripeCustomer['id']
+            user_profile.save()
             return redirect('profile')
     else:
         form = forms.UserCreateForm()
