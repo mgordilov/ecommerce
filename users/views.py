@@ -22,7 +22,7 @@ def profile(request):
 
 def signin(request):
     if request.method == 'POST':
-        form = forms.UserLoginForm(request.POST)
+        form = forms.AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password')
@@ -32,7 +32,7 @@ def signin(request):
                 next_url = request.GET.get('next')
                 return redirect(next_url or 'profile')
     else:
-        form = forms.UserLoginForm()
+        form = forms.AuthenticationForm(request)
     return render(request, 'users/login.html', {'form': form})    
 
 def signup(request):

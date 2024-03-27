@@ -7,11 +7,16 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+
+<div class="login_signup">
     <h1>Login</h1>
+
     <form method="POST">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" value="Login">
         <a href="{% url 'password_reset' %}">Forgot Password?</a>
+        <input type="submit" value="Login">
     </form>
+</div>
+
 {% endblock %}
