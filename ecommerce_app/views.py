@@ -24,36 +24,37 @@ endpoint_secret = os.getenv('STRIPE_WEBHOOK_SECRET')
 
 
 # Stripe related functions
-def createCheckoutSession(request, pk):
-    name = get_object_or_404(models.Product, pk=pk).name
-    price = get_object_or_404(models.Product, pk=pk).price * 100
-    if request.method == 'POST':
-        checkout_session = stripe.checkout.Session.create(
-            customer = request.user.userprofile.customer_id,
-            line_items = [
-                {
-                    'price_data': {
-                        'currency': 'eur',
-                        'product_data': {
-                            'name': name,
-                        },
-                        'unit_amount': int(price),
-                    },
-                    'quantity': 1,
-                },
-            ],
-            mode = 'payment',
-            metadata = {'user_id': request.user.id, 'product_id': pk},
-            success_url = 'http://localhost:8000/',
-            cancel_url = 'http://localhost:8000/cart/',
-        )
-        return redirect(checkout_session.url, code=303)
+# def createCheckoutSession(request, pk):
+#     name = get_object_or_404(models.Product, pk=pk).name
+#     price = get_object_or_404(models.Product, pk=pk).price * 100
+#     if request.method == 'POST':
+#         checkout_session = stripe.checkout.Session.create(
+#             customer = request.user.userprofile.customer_id,
+#             line_items = [
+#                 {
+#                     'price_data': {
+#                         'currency': 'eur',
+#                         'product_data': {
+#                             'name': name,
+#                         },
+#                         'unit_amount': int(price),
+#                     },
+#                     'quantity': 1,
+#                 },
+#             ],
+#             mode = 'payment',
+#             metadata = {'user_id': request.user.id, 'product_id': pk},
+#             success_url = 'http://localhost:8000/',
+#             cancel_url = 'http://localhost:8000/cart/',
+#         )
+#         return redirect(checkout_session.url, code=303)
 
-    else:
-        return render(request, 'ecommerce_app/home.html')
+#     else:
+#         return render(request, 'ecommerce_app/home.html')
 
 def createCartCheckoutSession(request):
     if request.method == 'POST':
+        eu_countries = ['AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK', 'GB']
         line_items = []
         metadata = {'user_id': request.user.id}
         n = 1
@@ -73,9 +74,15 @@ def createCartCheckoutSession(request):
             
         checkout_session = stripe.checkout.Session.create(
             customer = request.user.userprofile.customer_id,
+            customer_update = {
+                'shipping': 'auto'
+            },
             line_items = line_items,
             mode = 'payment',
             metadata = metadata,
+            shipping_address_collection = {
+                'allowed_countries': eu_countries
+            },
             success_url = 'http://localhost:8000/profile/',
             cancel_url = 'http://localhost:8000/cart/',
         )
@@ -106,16 +113,20 @@ def webhook(request):
         print("Payment was successful.")
         metadata = event['data']['object']['metadata']
         user_id = metadata['user_id']
+        payment_id = event['data']['object']['payment_intent']
 
         if user_id:
             user_profile = models.UserProfile.objects.get(user_id=user_id)
             cart = user_profile.cart.all()
+            product = get_object_or_404(models.Product, pk=cart.first().id)
+            seller = get_object_or_404(models.Business, pk=product.business_id)
             if cart:
                 order = models.Order.objects.create(
                     user=user_profile.user,
-                    seller=user_profile.business
+                    seller=seller,
                 )
                 order.product.add(*cart)
+                order.payment_id = payment_id
                 order.save()
 
                 user_profile.order.add(order)

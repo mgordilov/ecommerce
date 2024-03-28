@@ -11,8 +11,10 @@
             <li>{{ product.name }}</li>
         {% endfor %}
     </ul>
-    <form action="{% url 'cart-checkout' %}" method="POST">
-        {% csrf_token %}
-        <button type="submit">Checkout</button>
-    </form>
+    {% if request.user.userprofile.cart.all %}
+        <form action="{% url 'cart-checkout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Checkout</button>
+        </form>
+    {% endif %}
 {% endblock %}

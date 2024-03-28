@@ -48,3 +48,5 @@ class Order(models.Model):
     product = models.ManyToManyField(Product)
     quantity = models.PositiveIntegerField(default=1)
     seller = models.ForeignKey(Business, on_delete=models.CASCADE)
+    payment_id = models.CharField(max_length=200, null=True)
+    is_cancelled = models.BooleanField(default=False)

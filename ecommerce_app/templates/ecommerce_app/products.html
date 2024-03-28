@@ -17,10 +17,6 @@
                 <p>{{ product.price }}</p>
                 <p>Sold by {{ product.business }}</p>
                 <a href="{% url 'product_detail' product.id %}"><input type="button" value="View Details"></a>
-                <form action="{% url 'create-checkout-session' product.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit">Checkout</button>
-                </form>
                 <a href="{% url 'add-to-wishlist' product.id %}"><input type="button" value="Add to wishlist"></a>
                 <a href="{% url 'add-to-cart' product.id %}"><input type="button" value="Add to cart"></a>
             </li>
