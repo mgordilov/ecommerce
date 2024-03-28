@@ -7,12 +7,14 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="login_signup">
+    <div class="input_form">
         <h1>Create your account</h1>
+        <br>
+        
         <form method="POST">
             {% csrf_token %}
             {{ form|crispy }}
-            <input type="submit" value="Signup">
+            <button type="submit" class="btn btn-outline-success">Sign Up</button>
             <p>Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
         </form>
     </div>

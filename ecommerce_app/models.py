@@ -8,6 +8,7 @@ from users.models import UserProfile, Business
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
+    shortened_description = models.CharField(max_length=200, blank=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     WOMEN = 'women'
@@ -19,7 +20,7 @@ class Product(models.Model):
         (KIDS, 'Kids'),
     ]
     gender = models.CharField(max_length=200, choices=GENDER_TYPE_CHOICES, default=WOMEN)
-    size = models.CharField(max_length=3, blank=True)
+    size = models.CharField(max_length=30, blank=True)
     SHOES = 'shoes'
     TSHIRTS = 'tshirts'
     PANTS = 'pants'

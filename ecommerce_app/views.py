@@ -182,3 +182,6 @@ def home(request):
 
 def cart(request):
     return render(request, 'ecommerce_app/cart.html')
+
+def about(request):
+    return render(request, 'ecommerce_app/about.html')
