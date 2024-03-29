@@ -13,7 +13,7 @@
 
     {% endblock %}
 </head>
-<body style="padding: 20px;">
+<body onload="activeTab()">
     <header>
         <nav class="header_element right_hand_nav">
             <a href="{% url 'products' %}">Products</a>
@@ -47,6 +47,8 @@
             <a href="https://github.com/mgordilov" target="_blank"><i class="fa-brands fa-github"></i></a>
         </div>
     </footer>
+
+    <script src="{% static 'ecommerce_app/js/script.js' %}"></script>
 
     <script src="https://kit.fontawesome.com/62b05945c2.js" crossorigin="anonymous"></script>
 

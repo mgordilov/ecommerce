@@ -32,6 +32,13 @@ header nav a:hover {
     transition: 0.2s;
 }
 
+header nav a.active {
+    color: cadetblue;
+    border-bottom: 2px solid cadetblue;
+    padding-bottom: 0.7rem;
+    transition: 0.4s;
+}
+
 header img {
     width: 30rem;
 }
