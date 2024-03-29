@@ -20,6 +20,25 @@ stripe.api_key = os.getenv('STRIPE_API')
 def profile(request):
     return render(request, 'users/profile.html', {'user': request.user, 'orders': request.user.userprofile.order.all()})
 
+@login_required
+def profileWishlist(request):
+    return render(request, 'users/profile_wishlist.html', {'user': request.user, 'wishlist': request.user.userprofile.wishlist.all()})
+
+@login_required
+def profileOrders(request):
+    return render(request, 'users/profile_orders.html', {'user': request.user, 'orders': request.user.userprofile.order.all()})
+
+@login_required
+def profileEdit(request):
+    if request.method == 'POST':
+        form = forms.UserEditForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = forms.UserEditForm(instance=request.user)
+    return render(request, 'users/profile_edit.html', {'form': form})
+
 def signin(request):
     if request.method == 'POST':
         form = forms.AuthenticationForm(request, data=request.POST)

@@ -1,0 +1,26 @@
+{% extends 'ecommerce_app/base.html' %}
+
+{% block head %}
+    <title>Wishlist</title>
+{% endblock %}
+
+{% block content %}
+    <div class="profile_page">
+        <div class="profile_menu">
+            <a href="{% url 'profile' %}">Your details</a>
+            <a href="#">Your wishlist</a>
+            <a href="{% url 'profileOrders' %}">Your orders</a>
+            {% if user.userprofile.business %}
+                <a href="#">Your business</a>
+            {% endif %}
+        </div>
+        <div class="profile_content">
+            <h3>Your wishlist</h3>
+            <ul>
+                {% for product in wishlist.all %}
+                    <li>{{ product.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

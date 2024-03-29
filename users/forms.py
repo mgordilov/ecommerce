@@ -20,6 +20,22 @@ class UserCreateForm(UserCreationForm):
             Submit('submit', 'Submit')
         )
 
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        fields = ['username', 'email', 'first_name', 'last_name']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+            Submit('submit', 'Submit')
+        )
+
 class UserLoginForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
