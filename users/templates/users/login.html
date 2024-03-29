@@ -8,16 +8,23 @@
 
 {% block content %}
 
-<div class="input_form">
-    <h1>Login</h1>
-    <br>
+    <div class="page_content">
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <a href="{% url 'password_reset' %}">Forgot Password?</a>
-        <button type="submit" class="btn btn-outline-success">Login</button>
-    </form>
-</div>
+        <div class="input_form">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Login</legend>
+                    {{ form|crispy }}
+                    <a href="{% url 'password_reset' %}" style="padding-left: 10px;">Forgot Password?</a>
+                </fieldset>
+                <div class="form-group">
+                    <!-- <a href="{% url 'password_reset' %}">Forgot Password?</a> -->
+                    <button type="submit" class="btn btn-outline-success">Login</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
 
 {% endblock %}

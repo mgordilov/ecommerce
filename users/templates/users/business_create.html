@@ -7,14 +7,18 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="input_form">
-        <h1>Create Business</h1>
-        <br>
-        
-        <form method="POST" enctype="multipart/form-data" class="input_form">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-outline-success">Create</button>
-        </form>
+    <div class="page_content">
+        <div class="input_form">
+            <form method="POST" enctype="multipart/form-data" class="input_form">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Create Business</legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-outline-success">Create</button>
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}

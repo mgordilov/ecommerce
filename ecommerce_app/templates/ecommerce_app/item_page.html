@@ -5,11 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ product.name }}</h1>
-    <p>{{ product.description }}</p>
-    <p>{{ product.price }}</p>
-    <p>Sold by {{ product.business }}</p>
-    <a href="{% url 'add-to-wishlist' product.id %}"><input type="button" value="Add to wishlist"></a>
-    <a href="{% url 'add-to-cart' product.id %}"><input type="button" value="Add to cart"></a>
-    <a href="{% url 'product_delete' product.id %}"><input type="button" value="Delete product"></a>
+    <div class="page_content">
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.description }}</p>
+        <p>{{ product.price }}</p>
+        <p>Sold by {{ product.business }}</p>
+        <a href="{% url 'add-to-wishlist' product.id %}"><input type="button" value="Add to wishlist"></a>
+        <a href="{% url 'add-to-cart' product.id %}"><input type="button" value="Add to cart"></a>
+        <a href="{% url 'product_delete' product.id %}"><input type="button" value="Delete product"></a>
+    </div>
 {% endblock %}

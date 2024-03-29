@@ -7,15 +7,19 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="input_form">
-        <h1>Create your account</h1>
-        <br>
-        
-        <form method="POST">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-outline-success">Sign Up</button>
-            <p>Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
-        </form>
+    <div class="page_content">
+        <div class="input_form">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Create an account</legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-outline-success">Sign Up</button>
+                    <p>Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}

@@ -5,16 +5,18 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Your cart</h2>
-    <ul>
-        {% for product in request.user.userprofile.cart.all %}
-            <li>{{ product.name }}</li>
-        {% endfor %}
-    </ul>
-    {% if request.user.userprofile.cart.all %}
-        <form action="{% url 'cart-checkout' %}" method="POST">
-            {% csrf_token %}
-            <button type="submit">Checkout</button>
-        </form>
-    {% endif %}
+    <div class="page_content">
+        <h2>Your cart</h2>
+        <ul>
+            {% for product in request.user.userprofile.cart.all %}
+                <li>{{ product.name }}</li>
+            {% endfor %}
+        </ul>
+        {% if request.user.userprofile.cart.all %}
+            <form action="{% url 'cart-checkout' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">Checkout</button>
+            </form>
+        {% endif %}
+    </div>
 {% endblock %}

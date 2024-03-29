@@ -5,16 +5,10 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Welcome to our store</h2>
-    <hr>
-    <h1><a href="{% url 'products' %}">View Our Products</a></h1>
-    <hr>
-
-    {% if messages %}
-        {% for message in messages %}
-            <script>
-                alert('{{ message }}')
-            </script>
-        {% endfor %}
-    {% endif %}
+    <div class="page_content">
+        <h2>Welcome to our store</h2>
+        <hr>
+        <h1><a href="{% url 'products' %}">View Our Products</a></h1>
+        <hr>
+    </div>
 {% endblock %}
