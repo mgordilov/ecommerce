@@ -24,33 +24,6 @@ endpoint_secret = os.getenv('STRIPE_WEBHOOK_SECRET')
 
 
 # Stripe related functions
-# def createCheckoutSession(request, pk):
-#     name = get_object_or_404(models.Product, pk=pk).name
-#     price = get_object_or_404(models.Product, pk=pk).price * 100
-#     if request.method == 'POST':
-#         checkout_session = stripe.checkout.Session.create(
-#             customer = request.user.userprofile.customer_id,
-#             line_items = [
-#                 {
-#                     'price_data': {
-#                         'currency': 'eur',
-#                         'product_data': {
-#                             'name': name,
-#                         },
-#                         'unit_amount': int(price),
-#                     },
-#                     'quantity': 1,
-#                 },
-#             ],
-#             mode = 'payment',
-#             metadata = {'user_id': request.user.id, 'product_id': pk},
-#             success_url = 'http://localhost:8000/',
-#             cancel_url = 'http://localhost:8000/cart/',
-#         )
-#         return redirect(checkout_session.url, code=303)
-
-#     else:
-#         return render(request, 'ecommerce_app/home.html')
 
 def createCartCheckoutSession(request):
     if request.method == 'POST':
@@ -170,6 +143,11 @@ def productCreate(request):
     else:
         form = forms.ProductCreateForm()
     return render(request, 'ecommerce_app/create_product.html', {'form': form})
+
+class productDeleteView(DeleteView):
+    model = models.Product
+    success_url = '/products'
+    template_name = 'ecommerce_app/product_delete.html'
 
 def productDetail(request, pk):
     product = get_object_or_404(models.Product, pk=pk)

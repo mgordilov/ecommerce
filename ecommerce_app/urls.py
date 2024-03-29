@@ -11,7 +11,7 @@ urlpatterns = [
     # Product URLs
     path('products/', views.products, name='products'),
     path('product/<int:pk>/', views.productDetail, name='product_detail'),
-    # path('create-checkout-session/<int:pk>/', views.createCheckoutSession, name='create-checkout-session'),
+    path('product/<int:pk>/delete/', views.productDeleteView.as_view(), name='product_delete'),
     path('cart-checkout/', views.createCartCheckoutSession, name='cart-checkout'),
     path('create-product/', views.productCreate, name='create-product'),
     path('add-to-wishlist/<int:pk>/', views.AddToWishlist, name='add-to-wishlist'),
