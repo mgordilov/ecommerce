@@ -16,20 +16,20 @@ body {
     padding: 0!important;
 }
 
-/************** HEADER **************/
-
-header nav a {
+:is(header, footer) a {
     text-decoration: none;
     color: black;
 }
 
+a:visited {
+    color: black;
+}
+
+/************** HEADER **************/
+
 header nav a:hover {
     color: cadetblue;
     transition: 0.2s;
-}
-
-a:visited {
-    color: black;
 }
 
 header img {
@@ -61,7 +61,9 @@ header {
     place-items: center;
     justify-content: space-between;
     position: sticky;
+    top: 0;
     border-bottom: 1px solid lightgray;
+    background-color: white;
 }
 
 .header_element {
@@ -77,7 +79,22 @@ header {
 }
 
 
-/************** LOGIN/SIGNUP **************/
+/************** ABOUT PAGE **************/
+
+.about_background {
+    height: 20rem;
+    background-image: url('https://i.ibb.co/GvxLTd4/ecommerce-background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+.about_page {
+    padding: 2rem 15rem;
+}
+
+
+/************** INPUT FORMS **************/
 
 .input_form {
     display: flex;
@@ -140,4 +157,28 @@ header {
 
 footer {
     border-top: 1px solid lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+footer p {
+    margin: 0;
+}
+
+.footer_links {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer_links i {
+    font-size: 1.3rem;
+}
+
+.fa-facebook:hover {
+    color: rgb(0, 94, 188);
+}
+.fa-instagram:hover {
+    color: rgb(255, 133, 133);
 }
