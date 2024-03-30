@@ -54,3 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleWishlistIcon(icon);
     })
 })
+
+function openMenu() {
+    let menuBtn = document.querySelector('.toggle_btn');
+    let menuBtnIcon = document.querySelector('.toggle_btn i');
+    let dropDownMenu = document.querySelector('.dropdown_menu');
+    function openDropDown() {
+        dropDownMenu.classList.toggle('open');
+        const menuIsOpen = dropDownMenu.classList.contains('open');
+        menuBtnIcon.classList = menuIsOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+    menuBtn.onclick = openDropDown;
+}
+
+addEventListener('load', openMenu);

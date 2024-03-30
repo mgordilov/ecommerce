@@ -9,6 +9,47 @@
     <div class="page_content">
         <h1>Products</h1>
         <br>
+        <!-- TODO: Add filter -->
+        <div class="filter">
+            <form action="" method="GET" class="filterForm">
+                <legend>Filter</legend>
+                <div class="main-form-group">
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select name="gender" id="gender">
+                            <option value="">---</option>
+                            <option value="women">Women</option>
+                            <option value="men">Men</option>
+                            <option value="kids">Kids</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select name="category" id="category">
+                        <option value="">---</option>
+                        <option value="tshirts">T-Shirts</option>
+                        <option value="pants">Pants</option>
+                        <option value="shoes">Shoes</option>
+                        <option value="accessories">Accessories</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                    <label for="size">Size:</label>
+                    <select name="size" id="size">
+                        <option value="">---</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="2XL">2XL</option>
+                        <option value="3XL">3XL</option>
+                    </select>
+                    </div>
+                </div>
+                <button class="btn btn-outline-dark" "submit">Filter</button>
+            </form>
+        </div>
+        <br>
         <div class="productView">
             {% for item in products %}
             <div class="productCard" id="productCard" onclick="window.location.href='{% url 'product_detail' item.id %}'">

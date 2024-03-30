@@ -19,11 +19,16 @@
 <body onload="activeTab()">
     <header>
         <nav class="header_element right_hand_nav">
-            <a href="{% url 'products' %}">Products</a>
-            <a href="{% url 'products' %}?gender=women">Women</a>
-            <a href="{% url 'products' %}?gender=men">Men</a>
-            <a href="{% url 'products' %}?gender=kids">Kids</a>
+            <div class="dropdown_menu">
+                <a href="{% url 'products' %}">Products</a>
+                <a href="{% url 'products' %}?gender=women">Women</a>
+                <a href="{% url 'products' %}?gender=men">Men</a>
+                <a href="{% url 'products' %}?gender=kids">Kids</a>
+            </div>
         </nav>
+        <div class="toggle_btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
         <a class="header_element" href="{% url 'home' %}"><img src="{% static 'ecommerce_app/icon/logo-transparent-svg.svg' %}" alt=""></a>
         <nav class="header_element left_hand_nav">
             <a href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping"></i></a>

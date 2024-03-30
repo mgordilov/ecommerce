@@ -52,9 +52,15 @@ header nav {
     padding: 0 20px;
 }
 
-.right_hand_nav {
-    justify-content: space-around;
-    width: max-content;
+.dropdown_menu {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.toggle_btn {
+    font-size: 1.4rem;
+    display: none;
 }
 
 .left_hand_nav i {
@@ -269,6 +275,23 @@ header {
     font-size: larger;
 }
 
+.filterForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.main-form-group {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+
+}
+
 /************** CART PAGE **************/
 
 .cart_bg {
@@ -474,4 +497,34 @@ footer p {
 }
 .fa-instagram:hover {
     color: rgb(255, 133, 133);
+}
+
+
+
+@media (max-width: 1023px) {
+
+    .dropdown_menu {
+        display: none;
+        flex-direction: column;
+        justify-content: left;
+        gap: 15px;
+        position: absolute;
+        top: 7em;
+        right: 10%;
+        height: 0;
+        background-color: rgb(255, 255, 255);
+        overflow: hidden;
+        transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+  
+    .dropdown_menu.open {
+        display: flex;
+        padding: 10px 0;
+        height: 12em;
+        box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+  
+    .toggle_btn {
+        display: block;
+    }
 }
