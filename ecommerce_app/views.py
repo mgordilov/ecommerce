@@ -13,6 +13,7 @@ from django.contrib import messages
 
 import os
 import json
+import random
 
 import stripe
 
@@ -163,8 +164,14 @@ class productDeleteView(DeleteView):
     template_name = 'ecommerce_app/product_delete.html'
 
 def productDetail(request, pk):
-    product = get_object_or_404(models.Product, pk=pk)
-    return render(request, 'ecommerce_app/item_page.html', {'product': product})
+    main_product = get_object_or_404(models.Product, pk=pk)
+    sizes = main_product.size.split(',')
+    products_except_main = models.Product.objects.filter(gender=main_product.gender, size=main_product.size, category=main_product.category).exclude(id=main_product.id)
+    if len(products_except_main) > 0:
+        related_products = random.sample(list(products_except_main), 4)
+    else:
+        related_products = []
+    return render(request, 'ecommerce_app/item_page.html', {'product': main_product, 'sizes': sizes, 'related_products': related_products})
 
 def products(request):
     products = models.Product.objects.all()

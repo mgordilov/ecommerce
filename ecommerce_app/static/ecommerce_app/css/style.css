@@ -390,6 +390,18 @@ header {
     justify-content: space-between;
 }
 
+
+/************** ITEM PAGE **************/
+
+.item_header {
+    display: flex;
+    width: 100%;
+    gap: 2rem;
+}
+
+.item_header img {
+    width: 25rem;
+
 /************** FOOTER **************/
 
 footer {

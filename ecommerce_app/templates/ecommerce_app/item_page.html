@@ -6,6 +6,56 @@
 
 {% block content %}
     <div class="page_content">
+        <div class="item_header">
+            <img src="{{ product.image }}" alt="{{ product.name }}">
+            <div class="item_header_info">
+                <h1>{{ product.name }}</h1>
+                <p>{{ product.shortened_description }}</p>
+                <p><strong>Sizes</strong></p>
+                <ul>
+                    {% for size in sizes %}
+                        <li>{{ size }}</li>
+                    {% endfor %}
+                </ul>
+                <h5>{{ product.price }}&euro;</h5>
+            </div>
+        </div>
+        <hr>
+        <div class="item_description">
+            <h2>Description</h2>
+            <br>
+            <p>{{ product.description }}</p>
+        </div>
+        <hr>
+        {% if related_products %}
+            <h2>Related Products</h2>
+            <div class="related_products">
+                {% for item in related_products %}
+                <div class="productCard" id="productCard" onclick="window.location.href='{% url 'product_detail' item.id %}'">
+                    <div class="cardImage">
+                        <img src="{{ item.image }}" alt="">
+                    </div>
+                    <div class="cardInfo">
+                        <h5>{{ item.name }}</h5>
+                        <p>{{ item.shortened_description }}</p>
+                    </div>
+                    <div class="cardFooter">
+                        <h5>{{ item.price }}&euro;</h5>
+                        <div class="cardActions">
+                            {% if item in request.user.userprofile.wishlist.all %}
+                                <a href="{% url 'toggleWishlist' item.id %}"><i class="fa-solid fa-heart wishlistIcon"></i></a>
+                            {% else %}
+                                <a href="{% url 'toggleWishlist' item.id %}"><i class="fa-regular fa-heart wishlistIcon regularWishlistIcon"></i></a>
+                            {% endif %}
+                            <a href="{% url 'add-to-cart' item.id %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
         <h1>{{ product.name }}</h1>
         <p>{{ product.description }}</p>
         <p>{{ product.price }}</p>
