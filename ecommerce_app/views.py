@@ -17,7 +17,7 @@ import random
 
 import stripe
 
-stripe.api_key = os.getenv('STRIPE_API')
+stripe.api_key = os.getenv('STRIPE_API_KEY')
 
 endpoint_secret = os.getenv('STRIPE_WEBHOOK_SECRET')
 
