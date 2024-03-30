@@ -16,4 +16,5 @@ urlpatterns = [
     path('business-create/', views.business_create, name='business-create'),
     path('business-delete/', views.business_delete, name='business-delete'),
     path('business/', views.businessProfile, name='businessProfile'),
+    path('business/stripe-dashboard/', views.businessStripeDashboard, name='businessStripeDashboard'),
 ]

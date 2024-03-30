@@ -38,7 +38,7 @@
                                 {% else %}
                                     <a href="{% url 'toggleWishlist' product.id %}"><i class="fa-regular fa-heart wishlistIcon regularWishlistIcon"></i></a>
                                 {% endif %}
-                                <a href="{% url 'add-to-cart' product.id %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
+                                <a href="{% url 'addToCart' product.id %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
                             </div>
                         </div>
                     {% endfor %}

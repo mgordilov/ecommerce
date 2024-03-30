@@ -56,6 +56,11 @@ def businessProfile(request):
     orders = Order.objects.filter(seller=request.user.userprofile.business)
     return render(request, 'users/business_profile.html', {'user': request.user, 'business': request.user.userprofile.business, 'products': products, 'orders': orders})
 
+@login_required
+def businessStripeDashboard(request):
+    account_link = stripe.Account.create_login_link(request.user.userprofile.business.stripe_id)
+    return redirect(account_link.url)
+
 def signin(request):
     if request.method == 'POST':
         form = forms.AuthenticationForm(request, data=request.POST)
@@ -120,7 +125,7 @@ def business_create(request):
             stripeLink = stripe.AccountLink.create(
               account=stripeBusiness['id'],
               refresh_url="https://stripe.com/",
-              return_url="http://localhost:8000/profile",
+              return_url="http://localhost:8000/business",
               type="account_onboarding",
             )
             return redirect(stripeLink['url'])

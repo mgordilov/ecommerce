@@ -119,6 +119,7 @@ def webhook(request):
     return HttpResponse(status=200)
 
 #  Product related functions
+@login_required
 def toggleWishlist(request, pk):
     product = get_object_or_404(models.Product, pk=pk)
     if product in request.user.userprofile.wishlist.all():
@@ -129,6 +130,7 @@ def toggleWishlist(request, pk):
         messages.info(request, 'Product added to your wishlist')
     return redirect('products')
 
+@login_required
 def AddToCart(request, pk):
     product = get_object_or_404(models.Product, pk=pk)
     if product in request.user.userprofile.cart.all():
@@ -146,6 +148,7 @@ def AddToCart(request, pk):
             messages.info(request, 'Product added to your cart')
     return redirect('products')
 
+@login_required
 def productCreate(request):
     if request.method == 'POST':
         form = forms.ProductCreateForm(request.POST)
@@ -153,15 +156,24 @@ def productCreate(request):
             product = form.save(commit=False)
             product.business = request.user.userprofile.business
             product.save()
-            return redirect('products')
+            return redirect('business')
     else:
         form = forms.ProductCreateForm()
     return render(request, 'ecommerce_app/create_product.html', {'form': form})
 
-class productDeleteView(DeleteView):
+
+class productDeleteView(LoginRequiredMixin, DeleteView):
     model = models.Product
     success_url = '/products'
     template_name = 'ecommerce_app/product_delete.html'
+
+class productUpdateView(LoginRequiredMixin, UpdateView):
+    model = models.Product
+    form = forms.ProductUpdateForm
+    fields = ['name', 'shortened_description', 'description', 'price', 'size', 'gender', 'category', 'image']
+    success_url = '/business'
+    template_name = 'ecommerce_app/update_product.html'
+
 
 def productDetail(request, pk):
     main_product = get_object_or_404(models.Product, pk=pk)

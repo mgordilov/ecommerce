@@ -18,6 +18,7 @@
                     {% endfor %}
                 </ul>
                 <h5>{{ product.price }}&euro;</h5>
+                <button class="btn btn-outline-success" onclick="window.location.href='{% url 'addToCart' product.id %}'">Add to cart</button>
             </div>
         </div>
         <hr>
@@ -54,14 +55,5 @@
                 {% endfor %}
             </div>
         {% endif %}
-
-
-        <h1>{{ product.name }}</h1>
-        <p>{{ product.description }}</p>
-        <p>{{ product.price }}</p>
-        <p>Sold by {{ product.business }}</p>
-        <a href="{% url 'toggleWishlist' product.id %}"><input type="button" value="Add to wishlist"></a>
-        <a href="{% url 'add-to-cart' product.id %}"><input type="button" value="Add to cart"></a>
-        <a href="{% url 'product_delete' product.id %}"><input type="button" value="Delete product"></a>
     </div>
 {% endblock %}

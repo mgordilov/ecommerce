@@ -19,6 +19,10 @@
         <div class="profile_content">
             <h3>Your business, {{ business }}</h3>
             <p>Below you will find all the products you offer to the customers, as well as all the orders you have received from them</p>
+            <br>
+            <p>You can also view your fund flow metrics on your <a href="{% url 'businessStripeDashboard' %}" target="_blank">Stripe dashboard</a>.</p>
+            <br>
+            <p>In the case you would like to close your business, you can <a href="{% url 'business-delete' %}">delete you business</a> by clicking on the link.</p>
             <hr>
             <br>
             <h3>Your orders</h3>
@@ -42,7 +46,10 @@
             </div>
             <hr>
             <br>
-            <h3>Your products</h3>
+            <div class="businessProducts">
+                <h3>Your products</h3>
+                <button class="btn btn-outline-dark" onclick="location.href='{% url 'create-product' %}'">+ New</button>
+            </div>
             <br>
             {% for product in products %}
             <div class="productCard" id="productCard" onclick="window.location.href='{% url 'product_detail' product.id %}'">
@@ -56,7 +63,8 @@
                 <div class="cardFooter">
                     <h5>{{ product.price }}&euro;</h5>
                     <div class="cardActions">
-                        <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                        <a href="{% url 'update-product' product.id %}"><i class="fa-regular fa-pen-to-square"></i></a>
+                        <a href="{% url 'product_delete' product.id %}"><i class="fa-regular fa-trash-can" id="productDelete"></i></a>
                     </div>
                 </div>
             </div>
