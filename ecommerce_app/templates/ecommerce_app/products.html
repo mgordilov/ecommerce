@@ -11,23 +11,30 @@
         {% if request.user.is_authenticated and request.user.id == request.user.userprofile.business.owner.id %}
             <a href="{% url 'create-product' %}"><input type="button" value="Create Product"></a>
         {% endif %}
-        <ul>
+        <br>
+        <div class="productView">
             {% for product in products %}
-                <li>
-                    <h4>{{ product.name }}</h4>
-                    <p>{{ product.description }}</p>
-                    <p>{{ product.price }}</p>
-                    <p>Sold by {{ product.business }}</p>
-                    {% if product in request.user.userprofile.wishlist.all %}
-                        <a href="{% url 'add-to-wishlist' product.id %}"><i class="fa-solid fa-heart wishlistIcon"></i></a>
-                    {% else %}
-                        <a href="{% url 'add-to-wishlist' product.id %}"><i class="fa-regular fa-heart wishlistIcon" id="regularWishlistIcon"></i></a>
-                    {% endif %}
-                    <a href="{% url 'add-to-cart' product.id %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
-
-                    <a href="{% url 'product_detail' product.id %}"><input type="button" value="View Details"></a>
-                </li>
+            <div class="productCard" id="productCard" onclick="window.location.href='{% url 'product_detail' product.id %}'">
+                <div class="cardImage">
+                    <img src="{{ product.image }}" alt="">
+                </div>
+                <div class="cardInfo">
+                    <h5>{{ product.name }}</h5>
+                    <p>{{ product.shortened_description }}</p>
+                </div>
+                <div class="cardFooter">
+                    <h5>{{ product.price }}&euro;</h5>
+                    <div class="cardActions">
+                        {% if product in request.user.userprofile.wishlist.all %}
+                            <a href="{% url 'wishlist' product.id %}"><i class="fa-solid fa-heart wishlistIcon"></i></a>
+                        {% else %}
+                            <a href="{% url 'wishlist' product.id %}"><i class="fa-regular fa-heart wishlistIcon regularWishlistIcon"></i></a>
+                        {% endif %}
+                        <a href="{% url 'add-to-cart' product.id %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
-        </ul>
+        </div>
     </div>
 {% endblock %}

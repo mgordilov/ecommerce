@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function toggleWishlistIcon(regularIcon) {
         regularIcon.addEventListener('mouseover', () => {
+            console.log("hovered");
             regularIcon.classList.remove('fa-regular');
             regularIcon.classList.add('fa-solid');
         });
@@ -47,7 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const regularWishlistIcon = document.getElementById('regularWishlistIcon');
-    
-    toggleWishlistIcon(regularWishlistIcon);
+    var regularWishlistIcon = document.querySelectorAll('.regularWishlistIcon');
+
+    regularWishlistIcon.forEach((icon) => {
+        toggleWishlistIcon(icon);
+    })
 })

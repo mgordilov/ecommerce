@@ -8,6 +8,32 @@
     <div class="cart_bg"></div>
     <div class="page_content">
         <h2>Your cart</h2>
+        <br>
+        <div class="productLineView">
+            {% if wishlist.count == 0 %}
+                <p>You don't have any products in your wishlist yet.</p>
+            {% else %}
+                {% for product in wishlist.all %}
+                    <div class="productLine" onclick="window.location.href='{% url 'product_detail' product.id %}'">
+                        <div class="lineImage">
+                            <img src="{{ product.image }}" alt="">
+                        </div>
+                        <div class="lineInfo">
+                            <h5>{{ product.name }}</h5>
+                            <p>{{ product.shortened_description }}</p>
+                        </div>
+                        <div class="lineActions">
+                            {% if product in request.user.userprofile.wishlist.all %}
+                                <a href="{% url 'wishlist' product.id %}"><i class="fa-solid fa-heart wishlistIcon"></i></a>
+                            {% else %}
+                                <a href="{% url 'wishlist' product.id %}"><i class="fa-regular fa-heart wishlistIcon regularWishlistIcon"></i></a>
+                            {% endif %}
+                            <a href="{% url 'add-to-cart' product.id %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         <ul>
             {% for product in request.user.userprofile.cart.all %}
                 <li>{{ product.name }}</li>

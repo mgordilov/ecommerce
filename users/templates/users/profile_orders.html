@@ -16,6 +16,24 @@
             </div>
             <div class="profile_content">
                 <h3>Your orders</h3>
+                <br>
+                <div class="productLineView">
+                    {% if orders.count == 0 %}
+                        <p>You don't have any ordered products in your list yet.</p>
+                    {% else %}
+                        {% for order in orders %}
+                            <div class="productLine">
+                                <div class="lineImage">
+                                    <img src="{{ order.product.image }}" alt="">
+                                </div>
+                                <div class="lineInfo">
+                                    <h5>Order #{{ order.id }}</h5>
+                                    <p>Thanks for choosing {{ order.product.business }}. Your order has been confirmed and will be shipped soon.</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
                 <ul>
                     {% for order in orders %}
                         <li>Order #{{ order.id }}</li>

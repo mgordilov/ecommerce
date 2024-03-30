@@ -112,7 +112,7 @@ def webhook(request):
     return HttpResponse(status=200)
 
 #  Product related functions
-def AddToWishlist(request, pk):
+def wishlist(request, pk):
     product = get_object_or_404(models.Product, pk=pk)
     if product in request.user.userprofile.wishlist.all():
         request.user.userprofile.wishlist.remove(product)
@@ -130,7 +130,7 @@ def AddToCart(request, pk):
     else:
         request.user.userprofile.cart.add(product)
         messages.info(request, 'Product added to your cart')
-    return redirect('home')
+    return redirect('products')
 
 def productCreate(request):
     if request.method == 'POST':
