@@ -17,6 +17,16 @@ stripe.api_key = os.getenv('STRIPE_API')
 
 # Create your views here.
 @login_required
+def customerPortal(request):
+    customer_id = request.user.userprofile.customer_id
+    portalSession = stripe.billing_portal.Session.create(
+        customer = customer_id,
+        return_url = 'http://localhost:8000/profile/',
+    )
+    return redirect(portalSession.url)
+    
+
+@login_required
 def profile(request):
     return render(request, 'users/profile.html', {'user': request.user, 'orders': request.user.userprofile.order.all()})
 

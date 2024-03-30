@@ -282,6 +282,8 @@ header {
     display: grid;
     grid-template-columns: 1fr 3fr;
     gap: 2rem;
+    min-height: 90vh;
+
 }
 
 .profile_menu {
@@ -305,6 +307,15 @@ header {
     margin: 0;
     height: 100%;
     place-self: start;
+}
+
+.profile_content a {
+    color: black;
+}
+
+.welcomeProfile {
+    display: flex;
+    justify-content: space-between;
 }
 
 
@@ -346,7 +357,7 @@ header {
     gap: 0.5rem;
 }
 
-:is(.lineInfo) h5, p {
+:is(.lineInfo) h5, :is(.lineInfo) p {
     width: 100%;
 }
 

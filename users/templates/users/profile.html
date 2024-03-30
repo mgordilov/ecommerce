@@ -12,20 +12,24 @@
             <a href="{% url 'profileOrders' %}">Your orders</a>
             {% if user.userprofile.business %}
                 <a href="#">Your business</a>
+            {% else %}
+                <a href="{% url 'business-create' %}">Become a seller</a>
             {% endif %}
         </div>
         <div class="profile_content">
-            <h1>Welcome back {{ user.first_name }} {{ user.last_name }}</h1>
-            <h3>Your email is {{ user.email }}</h3>
-            <h3>Your username is {{ user.username }}</h3>
+            <div class="welcomeProfile">
+                <h2>Welcome back, {{ user.first_name }} : )</h2>
+                <button type="button" class="btn btn-outline-dark" onclick="location.href='{% url 'profileEdit' %}'"></a>Edit</button>
+            </div>
+            
             <hr>
-            <button type="button" onclick="location.href='{% url 'profileEdit' %}'">Edit</button>
+            <p>Below you will find your personal details, you have provided to us. If you would like to edit any of them, you can do that by clicking on the respective button in the top-right corner</p>
             <hr>
-            <h3>Your business is {{ user.userprofile.business.name }}</h3>
-            <a href="{% url 'business-create' %}"><input type="button" value="Create Business"></a>
-            {% if user.userprofile.business %}
-                <a href="{% url 'business-delete' %}"><input type="button" value="Delete Business"></a>
-            {% endif %}
+            <p><strong>Your email:</strong> {{ user.email }}</p>
+            <p><strong>Your username name:</strong> {{ user.username }}</p>
+            <p><strong>Your full name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+            <hr>
+            <p>You can also edit details used during the payment, by navigating to our partner's <strong><a href="{% url 'customerPortal' %}" method="POST">customer portal</a></strong></p>
         </div>
     </div>
 {% endblock %}

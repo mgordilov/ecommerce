@@ -12,6 +12,8 @@
             <a href="{% url 'profileOrders' %}">Your orders</a>
             {% if user.userprofile.business %}
                 <a href="#">Your business</a>
+            {% else %}
+                <a href="{% url 'business-create' %}">Become a seller</a>
             {% endif %}
         </div>
         <div class="profile_content">
