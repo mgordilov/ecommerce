@@ -33,3 +33,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const kidsButton = document.getElementById('kidsButton');
     toggleButtonVisibility(kidsProducts, kidsButton);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    function toggleWishlistIcon(regularIcon) {
+        regularIcon.addEventListener('mouseover', () => {
+            regularIcon.classList.remove('fa-regular');
+            regularIcon.classList.add('fa-solid');
+        });
+        regularIcon.addEventListener('mouseout', () => {
+            regularIcon.classList.remove('fa-solid');
+            regularIcon.classList.add('fa-regular');
+        });
+    }
+
+    const regularWishlistIcon = document.getElementById('regularWishlistIcon');
+    
+    toggleWishlistIcon(regularWishlistIcon);
+})

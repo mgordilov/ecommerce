@@ -120,7 +120,7 @@ def AddToWishlist(request, pk):
     else:
         request.user.userprofile.wishlist.add(product)
         messages.info(request, 'Product added to your wishlist')
-    return redirect('home')
+    return redirect('products')
 
 def AddToCart(request, pk):
     product = get_object_or_404(models.Product, pk=pk)
@@ -139,7 +139,7 @@ def productCreate(request):
             product = form.save(commit=False)
             product.business = request.user.userprofile.business
             product.save()
-            return redirect('home')
+            return redirect('products')
     else:
         form = forms.ProductCreateForm()
     return render(request, 'ecommerce_app/create_product.html', {'form': form})

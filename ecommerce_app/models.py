@@ -32,7 +32,7 @@ class Product(models.Model):
         (ACCESSORIES, 'Accessories'),
     ]
     category = models.CharField(max_length=200, choices=CATEGORY_CHOICES, default=TSHIRTS)
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    image = models.CharField(max_length=500, blank=True, null=True)
     business = models.ForeignKey(Business, on_delete=models.CASCADE, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

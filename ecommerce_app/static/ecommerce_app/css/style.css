@@ -16,6 +16,10 @@ body {
     padding: 0!important;
 }
 
+textarea {
+    resize: none!important;
+}
+
 :is(header, footer, .profile_menu) a {
     text-decoration: none;
     color: black;
@@ -83,7 +87,12 @@ header {
 /************** PAGE CONTENT **************/
 
 .page_content {
-    padding: 2rem;
+    padding: 3rem 10rem;
+}
+
+.page_content a {
+    text-decoration: none;
+    color: black;
 }
 
 
@@ -202,6 +211,11 @@ header {
     background-repeat: no-repeat;
     background-position: bottom;
 }
+
+.wishlistIcon {
+    color: red;
+}
+
 
 
 /************** CART PAGE **************/
