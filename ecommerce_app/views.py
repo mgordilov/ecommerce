@@ -170,7 +170,11 @@ def home(request):
     return render(request, 'ecommerce_app/home.html')
 
 def cart(request):
-    return render(request, 'ecommerce_app/cart.html')
+    total_price = 0
+    if request.user.userprofile.cart.all():
+        for product in request.user.userprofile.cart.all():
+            total_price += product.price
+    return render(request, 'ecommerce_app/cart.html', {'total_price': total_price})
 
 def about(request):
     return render(request, 'ecommerce_app/about.html')

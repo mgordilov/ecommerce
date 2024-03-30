@@ -13,7 +13,7 @@
             {% if wishlist.count == 0 %}
                 <p>You don't have any products in your wishlist yet.</p>
             {% else %}
-                {% for product in wishlist.all %}
+                {% for product in request.user.userprofile.cart.all %}
                     <div class="productLine" onclick="window.location.href='{% url 'product_detail' product.id %}'">
                         <div class="lineImage">
                             <img src="{{ product.image }}" alt="">
@@ -21,6 +21,9 @@
                         <div class="lineInfo">
                             <h5>{{ product.name }}</h5>
                             <p>{{ product.shortened_description }}</p>
+                        </div>
+                        <div class="linePrice">
+                            <h6>{{ product.price }}&euro;</h6>
                         </div>
                         <div class="lineActions">
                             {% if product in request.user.userprofile.wishlist.all %}
@@ -34,16 +37,15 @@
                 {% endfor %}
             {% endif %}
         </div>
-        <ul>
-            {% for product in request.user.userprofile.cart.all %}
-                <li>{{ product.name }}</li>
-            {% endfor %}
-        </ul>
-        {% if request.user.userprofile.cart.all %}
-            <form action="{% url 'cart-checkout' %}" method="POST">
-                {% csrf_token %}
-                <button type="submit">Checkout</button>
-            </form>
-        {% endif %}
+        <br>
+        <div class="cartFooter">
+            <h3>Total price: {{ total_price }}&euro;</h3>
+            {% if request.user.userprofile.cart.all %}
+                <form action="{% url 'cart-checkout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-primary">Checkout</button>
+                </form>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
