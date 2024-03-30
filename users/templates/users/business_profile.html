@@ -1,0 +1,71 @@
+{% extends 'ecommerce_app/base.html' %}
+
+{% block head %}
+    <title>Your business</title>
+{% endblock %}
+
+{% block content %}
+    <div class="profile_page">
+        <div class="profile_menu">
+            <a href="{% url 'profile' %}">Your details</a>
+            <a href="{% url 'profileWishlist' %}">Your wishlist</a>
+            <a href="{% url 'profileOrders' %}">Your orders</a>
+            {% if user.userprofile.business %}
+                <a href="{% url 'businessProfile' %}" class="active">Your business</a>
+            {% else %}
+                <a href="{% url 'business-create' %}" class="active">Become a seller</a>
+            {% endif %}
+        </div>
+        <div class="profile_content">
+            <h3>Your business, {{ business }}</h3>
+            <p>Below you will find all the products you offer to the customers, as well as all the orders you have received from them</p>
+            <hr>
+            <br>
+            <h3>Your orders</h3>
+            <br>
+            <div class="productLineView">
+                {% if orders.count == 0 %}
+                    <p>You don't have recived any orders from your customers</p>
+                {% else %}
+                    {% for order in orders %}
+                        <div class="productLine">
+                            <div class="lineImage">
+                                <img src="{{ order.product.image }}" alt="">
+                            </div>
+                            <div class="lineInfo">
+                                <h5>Order #{{ order.id }}</h5>
+                                <p>Thanks for choosing {{ order.product.business }}. Your order has been confirmed and will be shipped soon.</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <hr>
+            <br>
+            <h3>Your products</h3>
+            <br>
+            {% for product in products %}
+            <div class="productCard" id="productCard" onclick="window.location.href='{% url 'product_detail' product.id %}'">
+                <div class="cardImage">
+                    <img src="{{ product.image }}" alt="">
+                </div>
+                <div class="cardInfo">
+                    <h5>{{ product.name }}</h5>
+                    <p>{{ product.shortened_description }}</p>
+                </div>
+                <div class="cardFooter">
+                    <h5>{{ product.price }}&euro;</h5>
+                    <div class="cardActions">
+                        {% if product in request.user.userprofile.wishlist.all %}
+                            <a href="{% url 'wishlist' product.id %}"><i class="fa-solid fa-heart wishlistIcon"></i></a>
+                        {% else %}
+                            <a href="{% url 'wishlist' product.id %}"><i class="fa-regular fa-heart wishlistIcon regularWishlistIcon"></i></a>
+                        {% endif %}
+                        <a href="{% url 'add-to-cart' product.id %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -11,7 +11,7 @@
                 <a href="{% url 'profileWishlist' %}">Your wishlist</a>
                 <a href="{% url 'profileOrders' %}" class="active">Your orders</a>
                 {% if user.userprofile.business %}
-                <a href="#">Your business</a>
+                <a href="{% url 'businessProfile' %}">Your business</a>
             {% else %}
                 <a href="{% url 'business-create' %}">Become a seller</a>
             {% endif %}

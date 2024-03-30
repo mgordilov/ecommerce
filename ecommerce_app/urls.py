@@ -14,7 +14,7 @@ urlpatterns = [
     path('product/<int:pk>/delete/', views.productDeleteView.as_view(), name='product_delete'),
     path('cart-checkout/', views.createCartCheckoutSession, name='cart-checkout'),
     path('create-product/', views.productCreate, name='create-product'),
-    path('wishlist/<int:pk>/', views.wishlist, name='wishlist'),
+    path('wishlist-item/<int:pk>/', views.toggleWishlist, name='toggleWishlist'),
     path('add-to-cart/<int:pk>/', views.AddToCart, name='add-to-cart'),
 
     path('webhook', views.webhook, name='webhook'),

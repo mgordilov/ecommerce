@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from . import models
+from ecommerce_app.models import Product, Order
 from . import forms
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -48,6 +49,12 @@ def profileEdit(request):
     else:
         form = forms.UserEditForm(instance=request.user)
     return render(request, 'users/profile_edit.html', {'form': form})
+
+@login_required
+def businessProfile(request):
+    products = Product.objects.filter(business=request.user.userprofile.business)
+    orders = Order.objects.filter(seller=request.user.userprofile.business)
+    return render(request, 'users/business_profile.html', {'user': request.user, 'business': request.user.userprofile.business, 'products': products, 'orders': orders})
 
 def signin(request):
     if request.method == 'POST':

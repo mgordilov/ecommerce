@@ -5,7 +5,33 @@
 {% endblock %}
 
 {% block content %}
-    <div class="page_content">
+    <div class="profile_page">
+        <div class="profile_menu">
+            <a href="{% url 'profile' %}">Your details</a>
+            <a href="{% url 'profileWishlist' %}">Your wishlist</a>
+            <a href="{% url 'profileOrders' %}">Your orders</a>
+            {% if user.userprofile.business %}
+                <a href="#">Your business</a>
+            {% else %}
+                <a href="{% url 'business-create' %}" class="active">Become a seller</a>
+            {% endif %}
+        </div>
+        <div class="profile_content" style="place-self: center;">
+            <div class="input_form">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Delete Business</legend>
+                        <p>Are you sure you want to delete this business?</p>
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="page_content">
         <div class="input_form">
             <form action="" method="POST">
                 {% csrf_token %}
@@ -18,5 +44,5 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
 {% endblock %}

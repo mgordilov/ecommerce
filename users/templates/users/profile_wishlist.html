@@ -11,7 +11,7 @@
             <a href="{% url 'profileWishlist' %}" class="active">Your wishlist</a>
             <a href="{% url 'profileOrders' %}">Your orders</a>
             {% if user.userprofile.business %}
-                <a href="#">Your business</a>
+                <a href="{% url 'businessProfile' %}">Your business</a>
             {% else %}
                 <a href="{% url 'business-create' %}">Become a seller</a>
             {% endif %}
@@ -34,9 +34,9 @@
                             </div>
                             <div class="lineActions">
                                 {% if product in request.user.userprofile.wishlist.all %}
-                                    <a href="{% url 'wishlist' product.id %}"><i class="fa-solid fa-heart wishlistIcon"></i></a>
+                                    <a href="{% url 'toggleWishlist' product.id %}"><i class="fa-solid fa-heart wishlistIcon"></i></a>
                                 {% else %}
-                                    <a href="{% url 'wishlist' product.id %}"><i class="fa-regular fa-heart wishlistIcon regularWishlistIcon"></i></a>
+                                    <a href="{% url 'toggleWishlist' product.id %}"><i class="fa-regular fa-heart wishlistIcon regularWishlistIcon"></i></a>
                                 {% endif %}
                                 <a href="{% url 'add-to-cart' product.id %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
                             </div>
@@ -46,4 +46,14 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                alert('{{ message }}')
+            </script>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

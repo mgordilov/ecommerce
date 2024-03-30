@@ -112,7 +112,7 @@ def webhook(request):
     return HttpResponse(status=200)
 
 #  Product related functions
-def wishlist(request, pk):
+def toggleWishlist(request, pk):
     product = get_object_or_404(models.Product, pk=pk)
     if product in request.user.userprofile.wishlist.all():
         request.user.userprofile.wishlist.remove(product)
@@ -128,8 +128,15 @@ def AddToCart(request, pk):
         request.user.userprofile.cart.remove(product)
         messages.info(request, 'Product removed from your cart')
     else:
-        request.user.userprofile.cart.add(product)
-        messages.info(request, 'Product added to your cart')
+        if request.user.userprofile.cart.all():
+            if product.business_id == request.user.userprofile.cart.first().business_id:
+                request.user.userprofile.cart.add(product)
+                messages.info(request, 'Product added to your cart')
+            else:
+                messages.info(request, 'You can only add products from the same seller')
+        else:
+            request.user.userprofile.cart.add(product)
+            messages.info(request, 'Product added to your cart')
     return redirect('products')
 
 def productCreate(request):
