@@ -38,14 +38,16 @@
             {% endif %}
         </div>
         <br>
-        <div class="cartFooter">
-            <h3>Total price: {{ total_price }}&euro;</h3>
-            {% if request.user.userprofile.cart.all %}
-                <form action="{% url 'cart-checkout' %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-primary">Checkout</button>
-                </form>
-            {% endif %}
-        </div>
+        {% if request.user.userprofile.cart.all %}
+            <div class="cartFooter">
+                <h3>Total price: {{ total_price }}&euro;</h3>
+                    <form action="{% url 'cart-checkout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary">Checkout</button>
+                    </form>
+            </div>
+        {% else %}
+            <p>You don't have any products in your cart yet.</p>
+        {% endif %}
     </div>
 {% endblock %}
