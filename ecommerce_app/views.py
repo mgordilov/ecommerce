@@ -17,9 +17,9 @@ import random
 
 import stripe
 
-stripe.api_key = os.getenv('STRIPE_API_KEY')
+stripe.api_key = os.environ['STRIPE_API_KEY']
 
-endpoint_secret = os.getenv('STRIPE_WEBHOOK_SECRET')
+endpoint_secret = os.environ['STRIPE_WEBHOOK_SECRET']
 
 # Create your views here.
 
