@@ -4,3 +4,4 @@ django-crispy-forms==2.1
 Gunicorn
 pillow==10.2.0
 stripe==8.5.0
+whitenoise
