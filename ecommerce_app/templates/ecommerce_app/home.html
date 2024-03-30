@@ -5,10 +5,21 @@
 {% endblock %}
 
 {% block content %}
+    <div class="products_intro" id="productsIntro">
+        <button id="productsIntroButton"><a href="{% url 'products' %}">View all products</a></button>
+    </div>
+    <div class="mwk_intro">
+        <div class="womenProducts" id="womenProducts">
+            <button id="womenButton"><a href="{% url 'products' %}?gender=women">Women</a></button>
+        </div>
+        <div class="menProducts" id="menProducts">
+            <button id="menButton"><a href="{% url 'products' %}?gender=men">Men</a></button>
+        </div>
+        <div class="kidsProducts" id="kidsProducts">
+            <button id="kidsButton"><a href="{% url 'products' %}?gender=kids">Kids</a></button>
+        </div>
+    </div>
     <div class="page_content">
-        <h2>Welcome to our store</h2>
-        <hr>
-        <h1><a href="{% url 'products' %}">View Our Products</a></h1>
-        <hr>
+        
     </div>
 {% endblock %}

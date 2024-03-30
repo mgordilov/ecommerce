@@ -8,7 +8,7 @@
     <div class="profile_page">
         <div class="profile_menu">
             <a href="{% url 'profile' %}">Your details</a>
-            <a href="#">Your wishlist</a>
+            <a href="{% url 'profileWishlist' %}" class="active">Your wishlist</a>
             <a href="{% url 'profileOrders' %}">Your orders</a>
             {% if user.userprofile.business %}
                 <a href="#">Your business</a>

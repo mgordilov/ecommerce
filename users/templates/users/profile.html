@@ -1,13 +1,13 @@
 {% extends 'ecommerce_app/base.html' %}
 
 {% block head %}
-    <title>{{ user.username }}</title>
+    <title>Profile</title>
 {% endblock %}
 
 {% block content %}
     <div class="profile_page">
         <div class="profile_menu">
-            <a href="#">Your details</a>
+            <a href="{% url 'profile' %}" class="active">Your details</a>
             <a href="{% url 'profileWishlist' %}">Your wishlist</a>
             <a href="{% url 'profileOrders' %}">Your orders</a>
             {% if user.userprofile.business %}

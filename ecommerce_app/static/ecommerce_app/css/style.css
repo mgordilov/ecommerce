@@ -16,7 +16,7 @@ body {
     padding: 0!important;
 }
 
-:is(header, footer) a {
+:is(header, footer, .profile_menu) a {
     text-decoration: none;
     color: black;
 }
@@ -71,6 +71,7 @@ header {
     top: 0;
     border-bottom: 1px solid lightgray;
     background-color: white;
+    z-index: 1;
 }
 
 .header_element {
@@ -85,6 +86,68 @@ header {
     padding: 2rem;
 }
 
+
+/************** HOME PAGE **************/
+
+.products_intro {
+    width: 100%;
+    height: 30rem;
+    background-image: url('https://i.ibb.co/BGNHGPj/imageresizer.jpg');
+    background-position: center;
+}
+
+.mwk_intro {
+    display: flex;
+    flex-direction: row;
+}
+
+.womenProducts {
+    flex: 1;
+    background-image: url('https://i.ibb.co/zm7KgJc/teaser-gala-xmas-shopping-jpg.jpg');
+    height: 25rem;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.menProducts {
+    flex: 1;
+    background-image: url('https://i.ibb.co/TwRGkRq/stock-photo-happy-man-holding-shopping-bags.jpg');
+    height: 25rem;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.kidsProducts {
+    flex: 1;
+    background-image: url('https://i.ibb.co/4dxSjQg/depositphotos-243013782-stock-photo-shopping-holidays-dear-friend-girl.webp');
+    height: 25rem;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+:is(.products_intro, .menProducts, .womenProducts, .kidsProducts) {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+:is(.products_intro, .menProducts, .womenProducts, .kidsProducts) button {
+    padding: 1rem 2rem;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: large;
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+}
+
+:is(.products_intro, .menProducts, .womenProducts, .kidsProducts) button.showButton {
+    opacity: 1;
+    translate: 0 -10px;
+}
 
 /************** ABOUT PAGE **************/
 
@@ -130,21 +193,39 @@ header {
 }
 
 
+/************** PRODUCT PAGE **************/
+
+.products_bg {
+    height: 30rem;
+    background-image: url('https://i.ibb.co/M9D2xg9/nonhome-1531880402.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+
+/************** CART PAGE **************/
+
+.cart_bg {
+    height: 30rem;
+    background-image: url('https://i.ibb.co/LSvy7rH/ecommerce-20shopping-20cart-png.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
 /************** PROFILE PAGE **************/
 
 .profile_page {
     display: grid;
-    /* grid-template-columns: 1fr 3fr; */
+    grid-template-columns: 1fr 3fr;
     gap: 2rem;
-    grid-template-areas: 
-        'profile_menu profile_content profile_content profile_content'
-    ;
 }
 
 .profile_menu {
-    grid-area: profile_menu;
     border-right: 1px solid lightgray;
-    padding: 2rem;
+    padding: 4rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -152,8 +233,13 @@ header {
     width: 100%;
 }
 
+.profile_menu a.active {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid black;
+}
+
 .profile_content {
-    grid-area: profile_content;
     padding: 2rem;
     margin: 0;
     height: 100%;

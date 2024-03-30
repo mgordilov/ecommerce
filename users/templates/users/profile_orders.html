@@ -9,7 +9,7 @@
             <div class="profile_menu">
                 <a href="{% url 'profile' %}">Your details</a>
                 <a href="{% url 'profileWishlist' %}">Your wishlist</a>
-                <a href="#">Your orders</a>
+                <a href="{% url 'profileOrders' %}" class="active">Your orders</a>
                 {% if user.userprofile.business %}
                     <a href="#">Your business</a>
                 {% endif %}

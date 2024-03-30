@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+    <div class="products_bg"></div>
     <div class="page_content">
         <h1>Products</h1>
         {% if request.user.is_authenticated and request.user.id == request.user.userprofile.business.owner.id %}
