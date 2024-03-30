@@ -14,7 +14,7 @@ import os
 
 import stripe
 
-stripe.api_key = os.getenv('STRIPE_API')
+stripe.api_key = os.environ['STRIPE_API_KEY']
 
 # Create your views here.
 @login_required
