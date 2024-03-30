@@ -13,24 +13,24 @@
         {% endif %}
         <br>
         <div class="productView">
-            {% for product in products %}
-            <div class="productCard" id="productCard" onclick="window.location.href='{% url 'product_detail' product.id %}'">
+            {% for item in products %}
+            <div class="productCard" id="productCard" onclick="window.location.href='{% url 'product_detail' item.id %}'">
                 <div class="cardImage">
-                    <img src="{{ product.image }}" alt="">
+                    <img src="{{ item.image }}" alt="">
                 </div>
                 <div class="cardInfo">
-                    <h5>{{ product.name }}</h5>
-                    <p>{{ product.shortened_description }}</p>
+                    <h5>{{ item.name }}</h5>
+                    <p>{{ item.shortened_description }}</p>
                 </div>
                 <div class="cardFooter">
-                    <h5>{{ product.price }}&euro;</h5>
+                    <h5>{{ item.price }}&euro;</h5>
                     <div class="cardActions">
-                        {% if product in request.user.userprofile.wishlist.all %}
-                            <a href="{% url 'toggleWishlist' product.id %}"><i class="fa-solid fa-heart wishlistIcon"></i></a>
+                        {% if item in request.user.userprofile.wishlist.all %}
+                            <a href="{% url 'toggleWishlist' item.id %}"><i class="fa-solid fa-heart wishlistIcon"></i></a>
                         {% else %}
-                            <a href="{% url 'toggleWishlist' product.id %}"><i class="fa-regular fa-heart wishlistIcon regularWishlistIcon"></i></a>
+                            <a href="{% url 'toggleWishlist' item.id %}"><i class="fa-regular fa-heart wishlistIcon regularWishlistIcon"></i></a>
                         {% endif %}
-                        <a href="{% url 'add-to-cart' product.id %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
+                        <a href="{% url 'add-to-cart' item.id %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
                     </div>
                 </div>
             </div>

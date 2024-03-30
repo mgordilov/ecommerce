@@ -31,6 +31,7 @@ def createCartCheckoutSession(request):
         line_items = []
         metadata = {'user_id': request.user.id}
         n = 1
+        seller = request.user.userprofile.cart.first().business
         for product in request.user.userprofile.cart.all():
             line_items.append({
                 'price_data': {
@@ -56,7 +57,12 @@ def createCartCheckoutSession(request):
             shipping_address_collection = {
                 'allowed_countries': eu_countries
             },
-            success_url = 'http://localhost:8000/profile/',
+            payment_intent_data = {
+                'transfer_data': {
+                    'destination': seller.stripe_id
+                }
+            },
+            success_url = 'http://localhost:8000/profile/orders/',
             cancel_url = 'http://localhost:8000/cart/',
         )
         return redirect(checkout_session.url, code=303)
