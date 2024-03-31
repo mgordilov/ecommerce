@@ -1,4 +1,4 @@
-# Welcome to AuroraCart
+# Welcome to AuroraCart (hosted on https://auroracart.onrender.com)
 
 AuroraCart is your one-stop solution for seamless online shopping experiences. As an innovative ecommerce platform, AuroraCart empowers customers to explore a diverse range of products from various merchants while ensuring a secure and convenient payment process.
 
